@@ -1,6 +1,5 @@
 # helium-chromium-portablelinux
-Portable Linux build and packaging for [helium-chromium](https://github.com/helium-software/helium-chromium) to be published in the
-[helium-chromium-binaries](https://github.com/helium-software/helium-chromium-binaries) web page found [here](https://helium-software.github.io/helium-chromium-binaries/).
+Portable Linux build and packaging for [helium-chromium](https://github.com/imputnet/helium-chromium).
 >Note that the builds are executed on an debian:bullseye docker image again, so the release's binaries work again on e.g. ubuntu 20.04 and maybe other 'older' systems :)
 
 ## building
