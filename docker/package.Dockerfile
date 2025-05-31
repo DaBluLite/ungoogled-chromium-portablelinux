@@ -1,5 +1,5 @@
 # Usage(on repo root folder):
-#   docker build . -t ungoogled-chromium:packager -f ./docker/package.Dockerfile
+#   docker build . -t helium-chromium:packager -f ./docker/package.Dockerfile
 # Optionally, add arguments like: --build-arg DEBIAN_VER=latest
 
 # Arguments configuration

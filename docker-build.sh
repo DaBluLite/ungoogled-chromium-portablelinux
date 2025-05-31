@@ -1,14 +1,14 @@
 #!/bin/bash
 
 BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-GIT_SUBMODULE="ungoogled-chromium"
+GIT_SUBMODULE="helium-chromium"
 
 IMAGE="chromium-builder:bullseye"
 
 echo "building docker image '${IMAGE}'"
 (cd $BASE_DIR/docker && docker buildx build -t ${IMAGE} -f ./build.Dockerfile .)
 
-# checkout ungoogled-chromium submodule if not present
+# checkout helium-chromium submodule if not present
 [ -n "$(ls -A ${BASE_DIR}/${GIT_SUBMODULE})" ] || git submodule update --init --recursive
 
 # execute build.sh within docker container

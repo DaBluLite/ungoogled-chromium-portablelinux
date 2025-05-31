@@ -5,10 +5,10 @@ CURRENT_DIR=$(dirname $(readlink -f $0))
 ROOT_DIR=$(cd ${CURRENT_DIR}/.. && pwd)
 BUILD_DIR="${ROOT_DIR}/build"
 
-chromium_version=$(cat ${ROOT_DIR}/ungoogled-chromium/chromium_version.txt)
-ungoogled_revision=$(cat ${ROOT_DIR}/ungoogled-chromium/revision.txt)
+chromium_version=$(cat ${ROOT_DIR}/helium-chromium/chromium_version.txt)
+helium_revision=$(cat ${ROOT_DIR}/helium-chromium/revision.txt)
 
-FILE_PREFIX=ungoogled-chromium_${chromium_version}-${ungoogled_revision}
+FILE_PREFIX=helium-chromium_${chromium_version}-${helium_revision}
 ARCHIVE_OUTPUT="${CURRENT_DIR}/${FILE_PREFIX}_linux.tar.xz"
 
 set -eux
@@ -51,9 +51,9 @@ if [ ! -f "./pkg2appimage" ] ; then
     wget -c $(wget -q https://api.github.com/repos/AppImageCommunity/pkg2appimage/releases -O - | grep "pkg2appimage-.*-x86_64.AppImage" | grep browser_download_url | head -n 1 | cut -d '"' -f 4)
     mv ./pkg2appimage-*.AppImage ./pkg2appimage && chmod +x ./pkg2appimage
 fi
-./pkg2appimage ./ungoogled-chromium.yaml
+./pkg2appimage ./helium-chromium.yaml
 
 mv out/*.AppImage ${ROOT_DIR}/${FILE_PREFIX}.AppImage
 mv "${CURRENT_DIR}/${FILE_PREFIX}_linux.tar.xz" ${ROOT_DIR}
-rm -rf out ungoogled-chromium
+rm -rf out helium-chromium
 

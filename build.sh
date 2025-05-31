@@ -11,7 +11,7 @@ done
 # directories
 # ==================================================
 root_dir="$(dirname $(readlink -f $0))"
-main_repo="${root_dir}/ungoogled-chromium"
+main_repo="${root_dir}/helium-chromium"
 
 build_dir="${root_dir}/build"
 download_cache="${build_dir}/download_cache"
@@ -29,13 +29,15 @@ if $clone;  then
     "${main_repo}/utils/clone.py" --sysroot amd64 -o "${src_dir}"
 else
     "${main_repo}/utils/downloads.py" retrieve -i "${main_repo}/downloads.ini" -c "${download_cache}"
+    "${main_repo}/utils/downloads.py" retrieve -i "${main_repo}/extras.ini" -c "${download_cache}"
     "${main_repo}/utils/downloads.py" unpack -i "${main_repo}/downloads.ini" -c "${download_cache}" "${src_dir}"
+    "${main_repo}/utils/downloads.py" unpack -i "${main_repo}/extras.ini" -c "${download_cache}" "${src_dir}"
 fi
 mkdir -p "${src_dir}/out/Default"
 
 # prepare sources
 # ==================================================
-## apply ungoogled-chromium patches
+## apply helium-chromium patches
 "${main_repo}/utils/prune_binaries.py" "${src_dir}" "${main_repo}/pruning.list"
 "${main_repo}/utils/patches.py" apply "${src_dir}" "${main_repo}/patches"
 "${main_repo}/utils/domain_substitution.py" apply -r "${main_repo}/domain_regex.list" -f "${main_repo}/domain_substitution.list" -c "${build_dir}/domsubcache.tar.gz" "${src_dir}"
@@ -49,11 +51,11 @@ patch -Np1 -i ${root_dir}/use-oauth2-client-switches-as-default.patch
 # disable check for a specific node version (here: 22.11.0, but latest lts we use is 22.15.0)
 patch -Np1 -i ${root_dir}/chromium-136-drop-nodejs-ver-check.patch
 
-# combine local and ungoogled-chromium gn flags
+# combine local and helium-chromium gn flags
 cat "${main_repo}/flags.gn" "${root_dir}/flags.gn" >"${src_dir}/out/Default/args.gn"
 
 # adjust host name to download prebuilt tools below and sysroot files from 
-# (see e.g. https://github.com/ungoogled-software/ungoogled-chromium/issues/1846)
+# (see e.g. https://github.com/helium-software/helium-chromium/issues/1846)
 sed -i 's/commondatastorage.9oo91eapis.qjz9zk/commondatastorage.googleapis.com/g' ./build/linux/sysroot_scripts/sysroots.json
 sed -i 's/commondatastorage.9oo91eapis.qjz9zk/commondatastorage.googleapis.com/g' ./tools/clang/scripts/update.py
 

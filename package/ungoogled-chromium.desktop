@@ -1,6 +1,6 @@
 [Desktop Entry]
 Version=1.0
-Name=Chromium (ungoogled)
+Name=Helium
 GenericName=Web Browser
 Comment=Access the Internet
 Exec=chromium %U
